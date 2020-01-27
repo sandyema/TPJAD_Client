@@ -1,7 +1,12 @@
 package com.example.agendatelefonica;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,11 +22,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DetaliiContact extends AppCompatActivity {
 
     final String server_url = "http://192.168.100.3:8080/AgendaTelefonica/detaliicontact";
+    final String server_url_delete = "http://192.168.100.3:8080/AgendaTelefonica/deleteContact";
+
     private ArrayList<Contact> contactlist = new ArrayList<>();
 
     private static String IDCONTACT;
@@ -39,7 +47,7 @@ public class DetaliiContact extends AppCompatActivity {
         TextView Telefon2=(TextView)findViewById(R.id.telefon2);
         TextView Email=(TextView)findViewById(R.id.email);
         TextView Zinastere=(TextView)findViewById(R.id.zinastere);
-
+        Button deleteButton=(Button)findViewById(R.id.button);
         getDetalii(Poza,NumeContact,Telefon1,Telefon2,Email,Zinastere);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -47,6 +55,12 @@ public class DetaliiContact extends AppCompatActivity {
 
         }
 
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                handleDelete();
+            }
+        });
         if(idcontact.equals(String.valueOf(1)))
             Poza.setImageResource(R.drawable.sandy);
 
@@ -129,4 +143,40 @@ public class DetaliiContact extends AppCompatActivity {
                 });
         queue.add(request_json);
     }
+    public void handleDelete() {
+
+            final Integer  id = Integer.valueOf(idcontact);
+            RequestQueue queue = Volley.newRequestQueue(DetaliiContact.this);
+            HashMap<String, String> contact = new HashMap<String, String>();
+            contact.put("contactId", String.valueOf(id));
+            JsonObjectRequest request_json = new JsonObjectRequest(
+                    server_url_delete,
+                    new JSONObject(contact),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                if (response.getString("response").equals("true")) {
+                                    Intent intent = new Intent(DetaliiContact.this, MainActivity.class);
+                                    startActivity(intent);
+
+                                } else {
+                                    System.out.println("Error at request for deleting the contact");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            VolleyLog.e("Error: ", error.getMessage());
+                        }
+                    });
+            queue.add(request_json);
+
+        }
+
+
 }

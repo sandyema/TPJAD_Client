@@ -25,6 +25,11 @@ public class DataObject implements Serializable
 
     }
 
+        public DataObject(Integer contactId, String contactNume) {
+            this.contactId = contactId;
+            this.contactNume = contactNume;
+        }
+
         @Override
         public String toString() {
         return contactNume;

@@ -14,15 +14,26 @@
         android:layout_marginTop="20dp"
         tools:srcCompat="@drawable/avatar" />
 
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sterge contact"
+        android:textAlignment="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:typeface="sans" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="41dp"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
 
         <TextView
             android:id="@+id/textView"
-            android:layout_width="6dp"
+            android:layout_width="11dp"
             android:layout_height="52dp"
             android:layout_weight="1"
             android:text="Nume"
@@ -89,7 +100,7 @@
         android:id="@+id/textView7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Email"
         android:textAlignment="center"
         android:textColor="@color/colorPrimary"
@@ -110,7 +121,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <TextView
@@ -136,4 +147,5 @@
             android:textStyle="bold"
             android:typeface="sans" />
     </LinearLayout>
+
 </LinearLayout>
